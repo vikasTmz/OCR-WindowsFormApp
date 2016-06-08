@@ -12,7 +12,9 @@ c:\users\vikas thmz\documents\visual studio 2015\Projects\HelloWorld\bin\Debug\i
 c:\users\vikas thmz\documents\visual studio 2015\Projects\HelloWorld\bin\Debug\itextsharp.xtra.dll
 c:\users\vikas thmz\documents\visual studio 2015\Projects\HelloWorld\bin\Debug\itextsharp.xml
 C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\bin\Debug\tessnet2_32.dll
-C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\bin\Debug\Database1.mdf
-C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\bin\Debug\Database1_log.ldf
 C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\obj\Debug\HelloWorld.LoginPage.resources
+C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\obj\Debug\HelloWorld.Register.resources
+C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\bin\Debug\Database1.mdf
+C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\bin\Debug\Database1_log.ldf
