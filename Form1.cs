@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
+using System.Data;
 
 namespace HelloWorld
 {
@@ -124,7 +125,6 @@ namespace HelloWorld
             {
                 foreach (PdfName name in xobj.Keys)
                 {
-                    //Debug.WriteLine(xobj.Keys + "NOTE");
                     PdfObject obj = xobj.Get(name);
                     if (obj.IsIndirect())
                     {
@@ -154,6 +154,7 @@ namespace HelloWorld
 
         }
         string json2;
+        Bitmap bit1;
         private void ocrUpload(Int32 index)
         {
             string temppath1 = Globals.img_path[index];
@@ -161,7 +162,7 @@ namespace HelloWorld
                 return;
             Bitmap image1 = new Bitmap(temppath1);
 
-            Bitmap bit1 = new Bitmap(Globals.img_path[index]);
+            bit1 = new Bitmap(Globals.img_path[index]);
             pictureBox1.Image = bit1;
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             string[] lines = { "" };
@@ -177,51 +178,47 @@ namespace HelloWorld
                 i++;
             }
 
-            if (Globals.imgocr_text[index] == "")
+            tessnet2.Tesseract ocr = new tessnet2.Tesseract();
+            ocr.SetVariable("tessedit_char_whitelist", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            ocr.Init(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\tessdata_eng\", "eng", false); // To use correct tessdata
+
+            richTextBox1.Text = "";
+
+            i = 0;
+            List<tessnet2.Word> result1 = ocr.DoOCR(image1, Rectangle.Empty);
+            foreach (tessnet2.Word word in result1)
             {
-
-                tessnet2.Tesseract ocr = new tessnet2.Tesseract();
-                ocr.SetVariable("tessedit_char_whitelist", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-                ocr.Init(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\tessdata_eng\", "eng", false); // To use correct tessdata
-
-                richTextBox1.Text = "";
-
-                i = 0;
-                List<tessnet2.Word> result1 = ocr.DoOCR(image1, Rectangle.Empty);
-                foreach (tessnet2.Word word in result1)
+                richTextBox1.Text += word.Text;
+                Globals.TextboxStringMatch[i] = word.Text;
+                using (StreamWriter file = new StreamWriter(@"C:\Users\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\ocrOutput.txt", true))
                 {
-                    richTextBox1.Text += word.Text;
-                    Globals.TextboxStringMatch[i] = word.Text;
-                    using (StreamWriter file = new StreamWriter(@"C:\Users\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\ocrOutput.txt", true))
-                    {
-                        file.WriteLine(word.Text);
-                    }
-                    richTextBox1.Text += " ";
-                    i++;
+                    file.WriteLine(word.Text);
                 }
-                Globals.imgocr_text[index] = richTextBox1.Text;
-                JArray array2 = new JArray();
-                array2.Add(Globals.imgocr_text[Globals.index]);
-                JObject o = new JObject();
-                o["JSON2"] = array2;
-                json2 = o.ToString();
+                richTextBox1.Text += " ";
+                i++;
+            }
+            Globals.imgocr_text[index] = richTextBox1.Text;
+            JArray array2 = new JArray();
+            array2.Add(Globals.imgocr_text[Globals.index]);
+            JObject o = new JObject();
+            o["JSON2"] = array2;
+            json2 = o.ToString();
 
-               
-               }
-            else
-                richTextBox1.Text = Globals.imgocr_text[index];
         }
 
         private void RegexSearch(string sPattern)
         {
 
             var myDictionary = new Dictionary<string, IList<string>>();
-            myDictionary["OXYGEN"] = new List<string> { "OXYG..", "OXY...", "O.YGEN" };
+            myDictionary["Invoice"] = new List<string> { "Inv..ce", "I.vo.c.", "Inv..c." };
+            myDictionary["Invoice Number"] = new List<string> { "Inv..ce Num...", "Inv..ce No", "Inv..ce Non" };
+            myDictionary["Invoice Date"] = new List<string> { "Inv..ce Date", "Inv..ce D.t.", "Inv..ce D..e", };
+            myDictionary["Invoice Name"] = new List<string> { "Inv..ce Name", "Inv..ce N.m.", "Inv..ce Na.." };
+
             myDictionary["Address"] = new List<string> { "Addre..", "Ad..ess", "A..ress" };
             myDictionary["Telephone"] = new List<string> { "Tel", "Telep....", "Tele No" };
             myDictionary["Name"] = new List<string> { "Name", "Na.e", "Names" };
             myDictionary["Amount"] = new List<string> { "Amo.n.", "A.o.n.", "Amnt" };
-            myDictionary["NO"] = new List<string> { "NO", "NO", "no" };
             myDictionary["DOCTOR"] = new List<string> { "DOCTO.", "DOC.O.", "DO..O." };
 
             richTextBox1.Text = "";
@@ -263,7 +260,7 @@ namespace HelloWorld
 
             if (Globals.length == 0)
             {
-                string[] customText = new string[] { "Address", "Telephone", "Name", "Amount", "OXYGEN", "NO", "DOCTOR" };
+                string[] customText = new string[] { "Invoice Number", "Invoice Date", "Invoice Name", "Address", "Telephone", "Name", "Amount", "DOCTOR" };
                 comboBox1.Items.AddRange(customText);
             }
 
@@ -287,75 +284,205 @@ namespace HelloWorld
             while (Reader.Read())
             {
                 for (int i = 0; i < Reader.FieldCount; i++)
-                {
                     Template.Items.Add(Reader.GetValue(i).ToString());
-                    if (Reader.GetValue(i).ToString().Equals("Invoice", StringComparison.Ordinal))
-                    {
-                        if (!TemplateDetail.Items.Contains("Invoice Date"))
-                            TemplateDetail.Items.Add("Invoice Date");
-                        if (!TemplateDetail.Items.Contains("Invoice Number"))
-                            TemplateDetail.Items.Add("Invoice Number");
-                    }
-                }
 
             }
             connection.Close();
             //SqlCommand myCommand = new SqlCommand("select * from Requests where Complete = 0", myConnection);
         }
+        private void Template_TextChanged(object sender, EventArgs e)
+        {
+            if (Template.Text.Equals("Invoice", StringComparison.Ordinal))
+            {
+                checkedListBox1.Items.Clear();
+                if (!checkedListBox1.Items.Contains("Invoice Date"))
+                    checkedListBox1.Items.Add("Invoice Date");
+                if (!checkedListBox1.Items.Contains("Invoice Number"))
+                    checkedListBox1.Items.Add("Invoice Number");
+                if (!checkedListBox1.Items.Contains("Invoice Name"))
+                    checkedListBox1.Items.Add("Invoice Name");
+            }
+            if (Template.Text.Equals("Receipt", StringComparison.Ordinal))
+            {
+                checkedListBox1.Items.Clear();
+                if (!checkedListBox1.Items.Contains("Receipt Date"))
+                    checkedListBox1.Items.Add("Receipt Date");
+                if (!checkedListBox1.Items.Contains("Receipt Total"))
+                    checkedListBox1.Items.Add("Receipt Total");
+                if (!checkedListBox1.Items.Contains("Receipt Time"))
+                    checkedListBox1.Items.Add("Receipt Time");
+                if (!checkedListBox1.Items.Contains("Receipt Number"))
+                    checkedListBox1.Items.Add("Receipt Number");
+            }
+        }
+        private string ValidateOutput(string value)
+        {
+            var myDictionary = new Dictionary<string, IList<string>>();
+
+            myDictionary["Invoice"] = new List<string> { "Inv..ce", "I.vo.c.", "Inv..c." };
+            myDictionary["Total"] = new List<string> { "Tota.", "To.al", "To..l" };
+            myDictionary["Time"] = new List<string> { "Time", "Ti.e", "Tim." };
+            myDictionary["Number"] = new List<string> { "Num...", "No", "Non" };
+            myDictionary["Date"] = new List<string> { "Date", "D.t.", "D..e", };
+            myDictionary["Name"] = new List<string> { "Name", "N.m.", "Na.." };
+            
+            for (int i = 0; i < Globals.TextboxStringMatch.Length; i++)
+            {
+                int j = 0, m = 0;
+                string s = Globals.TextboxStringMatch[i];
+                if (s == null)
+                    break;
+
+                while (m < 3)
+                {
+
+                    if (System.Text.RegularExpressions.Regex.IsMatch(s, myDictionary["Invoice"][m], System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                    {
+                        j = 0;
+                        int k = i;
+                        k++;
+                        s = Globals.TextboxStringMatch[k];
+                        k++;
+                        while (j < 3)
+                        {
+                            if (value == "Invoice Number")
+                                if (System.Text.RegularExpressions.Regex.IsMatch(s, myDictionary["Number"][j], System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                                    return Globals.TextboxStringMatch[k];
+
+                            if (value == "Invoice Date")
+                                if (System.Text.RegularExpressions.Regex.IsMatch(s, myDictionary["Date"][j], System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                                    return Globals.TextboxStringMatch[k];
+
+                            if (value == "Invoice Name")
+                                if (System.Text.RegularExpressions.Regex.IsMatch(s, myDictionary["Name"][j], System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                                    return Globals.TextboxStringMatch[k];
+                            j++;
+                        }
+
+                        break;
+                    }
+                    else
+                    {
+                        int n = i;
+                        n++;
+
+                        if (value == "Receipt Total")
+                            if (System.Text.RegularExpressions.Regex.IsMatch(s, myDictionary["Total"][m], System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                                return Globals.TextboxStringMatch[n];
+
+                        if (value == "Receipt Date")
+                        {
+                            Debug.WriteLine(value + " : " + s);
+                            if (System.Text.RegularExpressions.Regex.IsMatch(s, myDictionary["Date"][m], System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                                return Globals.TextboxStringMatch[n];
+                        }
+
+                        if (value == "Receipt Time")
+                            if (System.Text.RegularExpressions.Regex.IsMatch(s, myDictionary["Time"][m], System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                                return Globals.TextboxStringMatch[n];
+                    }
+                    m++;
+                }
+            }
+            return "";
+        }
+
+        string value1 , value2;
+        string Temp = "";
 
         private void SearchTemplate(object sender, EventArgs e)
         {
             string connstr = Utility.GetConnectionString();
             SqlConnection connection = new SqlConnection(connstr);
-            string value1 = Template.Text;
-            string value2 = TemplateDetail.Text;
-            cropWidth = cropHeight = 0;
-            if (value1 == null || value1 == "")
-                return;
-            if (value2 == null || value2 == "")
-                return;
-
-            if (value1.Equals("Invoice", StringComparison.Ordinal))
+            value1 = Template.Text;
+            int m = 0;
+            int Index = 0;
+            Temp = "";
+            RichTextBox[] txt = new RichTextBox[5];
+            txt[0] = templatetextbox1; txt[1] = templatetextbox2; txt[2] = templatetextbox3; txt[3] = templatetextbox4; txt[4] = templatetextbox5;
+            foreach (object itemChecked in checkedListBox1.CheckedItems)
             {
-                if (value2.Equals("Invoice Date", StringComparison.Ordinal))
-                {
-                    string query = "select X,Y,Width,Height from InvoiceDateTable where InvoiceDateID = 1";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    SqlDataReader Reader;
-                    connection.Open();
-                    Reader = command.ExecuteReader();
-                    while (Reader.Read())
-                    {
-                        cropX = Int32.Parse(Reader.GetValue(0).ToString());
-                        cropY = Int32.Parse(Reader.GetValue(1).ToString());
-                        cropWidth = Int32.Parse(Reader.GetValue(2).ToString());
-                        cropHeight = Int32.Parse(Reader.GetValue(3).ToString());
-                    }
-                }
-                if (value2.Equals("Invoice Number", StringComparison.Ordinal))
-                {
-                    string query = "select X,Y,Width,Height from InvoiceNoTable where InvoiceNoID = 1";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    SqlDataReader Reader;
-                    connection.Open();
-                    Reader = command.ExecuteReader();
-                    while (Reader.Read())
-                    {
-                        cropX = Int32.Parse(Reader.GetValue(0).ToString());
-                        cropY = Int32.Parse(Reader.GetValue(1).ToString());
-                        cropWidth = Int32.Parse(Reader.GetValue(2).ToString());
-                        cropHeight = Int32.Parse(Reader.GetValue(3).ToString());
-                    }
-                }
+                DataRowView castedItem = itemChecked as DataRowView;
+                value2 = itemChecked.ToString();
+                cropWidth = cropHeight = 0;
+                if (value1 == null || value1 == "")
+                    return;
+                if (value2 == null || value2 == "")
+                    return;
 
+                if (value1.Equals("Invoice", StringComparison.Ordinal))
+                {
+                    if (value2.Equals("Invoice Date", StringComparison.Ordinal))
+                    {
+                        string query = "select X,Y,Width,Height from InvoiceDateTable where InvoiceDateID = 1";
+                        SqlCommand command = new SqlCommand(query, connection);
+                        SqlDataReader Reader;
+                        connection.Open();
+                        Reader = command.ExecuteReader();
+                        while (Reader.Read()) { cropX = Int32.Parse(Reader.GetValue(0).ToString()); cropY = Int32.Parse(Reader.GetValue(1).ToString()); cropWidth = Int32.Parse(Reader.GetValue(2).ToString()); cropHeight = Int32.Parse(Reader.GetValue(3).ToString()); }
+                        Index = 0;
+                    }
+                    if (value2.Equals("Invoice Number", StringComparison.Ordinal))
+                    {
+                        string query = "select X,Y,Width,Height from InvoiceNoTable where InvoiceNoID = 1";
+                        SqlCommand command = new SqlCommand(query, connection);
+                        SqlDataReader Reader;
+                        connection.Open();
+                        Reader = command.ExecuteReader();
+                        while (Reader.Read()) { cropX = Int32.Parse(Reader.GetValue(0).ToString()); cropY = Int32.Parse(Reader.GetValue(1).ToString()); cropWidth = Int32.Parse(Reader.GetValue(2).ToString()); cropHeight = Int32.Parse(Reader.GetValue(3).ToString()); }
+                        Index = 1;
+                    }
+                    if (value2.Equals("Invoice Name", StringComparison.Ordinal))
+                    {
+                        string query = "select X,Y,Width,Height from InvoiceNameTable where Id = 1";
+                        SqlCommand command = new SqlCommand(query, connection);
+                        SqlDataReader Reader;
+                        connection.Open();
+                        Reader = command.ExecuteReader();
+                        while (Reader.Read()) { cropX = Int32.Parse(Reader.GetValue(0).ToString()); cropY = Int32.Parse(Reader.GetValue(1).ToString()); cropWidth = Int32.Parse(Reader.GetValue(2).ToString()); cropHeight = Int32.Parse(Reader.GetValue(3).ToString()); }
+                        Index = 2;
+                    }
+                }
+                else if (value1.Equals("Receipt", StringComparison.Ordinal))
+                {
+                    if (value2.Equals("Receipt Date", StringComparison.Ordinal))
+                    {
+                        string query = "select X,Y,Width,Height from ReceiptDateTable where DateID = 2";
+                        SqlCommand command = new SqlCommand(query, connection);
+                        SqlDataReader Reader;
+                        connection.Open();
+                        Reader = command.ExecuteReader();
+                        while (Reader.Read()) { cropX = Int32.Parse(Reader.GetValue(0).ToString()); cropY = Int32.Parse(Reader.GetValue(1).ToString()); cropWidth = Int32.Parse(Reader.GetValue(2).ToString()); cropHeight = Int32.Parse(Reader.GetValue(3).ToString()); }
+                        Index = 0;
+                    }
+                    if (value2.Equals("Receipt Total", StringComparison.Ordinal))
+                    {
+                        string query = "select X,Y,Width,Height from ReceiptTotalTable where TotalID = 2";
+                        SqlCommand command = new SqlCommand(query, connection);
+                        SqlDataReader Reader;
+                        connection.Open();
+                        Reader = command.ExecuteReader();
+                        while (Reader.Read()) { cropX = Int32.Parse(Reader.GetValue(0).ToString()); cropY = Int32.Parse(Reader.GetValue(1).ToString()); cropWidth = Int32.Parse(Reader.GetValue(2).ToString()); cropHeight = Int32.Parse(Reader.GetValue(3).ToString()); }
+                        Index = 1;
+                    }
+                    if (value2.Equals("Receipt Time", StringComparison.Ordinal))
+                    {
+                        string query = "select X,Y,Width,Height from ReceiptTimeTable where TimeID = 2";
+                        SqlCommand command = new SqlCommand(query, connection);
+                        SqlDataReader Reader;
+                        connection.Open();
+                        Reader = command.ExecuteReader();
+                        while (Reader.Read()) { cropX = Int32.Parse(Reader.GetValue(0).ToString()); cropY = Int32.Parse(Reader.GetValue(1).ToString()); cropWidth = Int32.Parse(Reader.GetValue(2).ToString()); cropHeight = Int32.Parse(Reader.GetValue(3).ToString()); }
+                        Index = 2;
+                    }
+                }
                 if (cropWidth < 1 || cropHeight < 1)
                 {
                     return;
                 }
 
-                // Debug.WriteLine(cropX + " : " + cropY + " : " + cropWidth + " : " + cropHeight);
                 Rectangle rect = new Rectangle(cropX, cropY, cropWidth, cropHeight);
-                Bitmap bit = new Bitmap(pictureBox1.Image, pictureBox1.Width, pictureBox1.Height);
+                Bitmap bit = new Bitmap(bit1, pictureBox1.Width, pictureBox1.Height);
                 Bitmap crop = new Bitmap(cropWidth, cropHeight);
                 Graphics gfx = Graphics.FromImage(crop);
                 gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -367,48 +494,43 @@ namespace HelloWorld
                 tessnet2.Tesseract ocr = new tessnet2.Tesseract();
                 ocr.SetVariable("tessedit_char_whitelist", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
                 ocr.Init(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\tessdata_eng\", "eng", false); // To use correct tessdata
-                int i = 0;
-                while (Globals.TextboxStringMatch[i] != null)
-                {
-                    Globals.TextboxStringMatch[i] = null;
-                    i++;
-                }
-                i = 0;
-                richTextBox1.Text = "";
                 List<tessnet2.Word> result1 = ocr.DoOCR(crop, Rectangle.Empty);
                 foreach (tessnet2.Word word in result1)
                 {
-                    Globals.TextboxStringMatch[i] = word.Text;
-                    i++;
-                    richTextBox1.Text += word.Text;
-                    if (word.Text == "\n")
-                        Debug.WriteLine(word.Text);
-                    richTextBox1.Text += " ";
+                    if(word.Text != "~")
+                        Temp += word.Text + " ";
                 }
-                Globals.imgocr_text[Globals.index] = richTextBox1.Text;
-                JArray array1 = new JArray();
-                array1.Add(value1);
-                array1.Add(value2);
-                array1.Add(DateTime.Now.ToString("h:mm:ss tt") + " " + DateTime.Now.ToString("M/d/yyyy"));
-                array1.Add(Globals.imgocr_text[Globals.index]);
-                JObject o = new JObject();
-                o["JSON1"] = array1;
-                string json1 = o.ToString();
-                Debug.WriteLine(json1);
-                Debug.WriteLine(json2);
-                string query1 = "INSERT INTO OutputTable (ID , JSON1 ,JSON2)";
-                query1 += " VALUES (@ID, @JSON1, @JSON2)";
-
-                SqlCommand myCommand = new SqlCommand(query1, connection);
-                myCommand.Parameters.AddWithValue("@ID", 1);
-                myCommand.Parameters.AddWithValue("@JSON1", json1);
-                myCommand.Parameters.AddWithValue("@JSON2", json2);
-                myCommand.ExecuteNonQuery();
+                
+                txt[Index].Text = ValidateOutput(value2);// richTextBox1.Text;
+                Temp += txt[Index].Text + " ";
+                m++;
+                connection.Close();
             }
 
-            connection.Close();
         }
 
+        private void SaveData_Click(object sender, EventArgs e)
+        {
+            JArray array1 = new JArray();
+            array1.Add(value1);
+            array1.Add(value2);
+            array1.Add(DateTime.Now.ToString("h:mm:ss tt") + " " + DateTime.Now.ToString("M/d/yyyy"));
+            array1.Add(Temp);
+
+            JObject o = new JObject();
+            o["JSON1"] = array1;
+            string json1 = o.ToString();
+            Debug.WriteLine(json1);
+            Debug.WriteLine(json2);
+            string query1 = "INSERT INTO OutputTable (ID , JSON1 ,JSON2)";
+            query1 += " VALUES (@ID, @JSON1, @JSON2)";
+            /*
+            SqlCommand myCommand = new SqlCommand(query1, connection);
+            myCommand.Parameters.AddWithValue("@ID", 1);
+            myCommand.Parameters.AddWithValue("@JSON1", json1);
+            myCommand.Parameters.AddWithValue("@JSON2", json2);
+            myCommand.ExecuteNonQuery();*/
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -436,7 +558,7 @@ namespace HelloWorld
 
             // Debug.WriteLine(cropX + " : " + cropY + " : " + cropWidth + " : " + cropHeight);
             Rectangle rect = new Rectangle(cropX, cropY, cropWidth, cropHeight);
-            Bitmap bit = new Bitmap(pictureBox1.Image, pictureBox1.Width, pictureBox1.Height);
+            Bitmap bit = new Bitmap(bit1, pictureBox1.Width, pictureBox1.Height);
             Bitmap crop = new Bitmap(cropWidth, cropHeight);
             Graphics gfx = Graphics.FromImage(crop);
             gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -463,10 +585,10 @@ namespace HelloWorld
                 i++;
                 richTextBox1.Text += word.Text;
                 if (word.Text == "\n")
-                    Debug.WriteLine(word.Text);
+                    Debug.WriteLine(word.Text + "<--newline detected");
                 richTextBox1.Text += " ";
             }
-            Globals.imgocr_text[Globals.index] = richTextBox1.Text;
+           // Globals.imgocr_text[Globals.index] = richTextBox1.Text;
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -503,7 +625,7 @@ namespace HelloWorld
 
         private void Reset_onclick(object sender, EventArgs e)
         {
-            Bitmap bit1 = new Bitmap(Globals.img_path[Globals.index]);
+            bit1 = new Bitmap(Globals.img_path[Globals.index]);
             pictureBox1.Image = bit1;
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
@@ -540,10 +662,8 @@ namespace HelloWorld
         }
 
 
-
         Pen borderpen = new Pen(Color.Red, 2);
         SolidBrush rectbrush = new SolidBrush(Color.FromArgb(100, Color.White));
-
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {

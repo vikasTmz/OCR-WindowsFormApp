@@ -39,16 +39,22 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.Template = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.TemplateDetail = new System.Windows.Forms.ComboBox();
             this.button5 = new System.Windows.Forms.Button();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.templatetextbox1 = new System.Windows.Forms.RichTextBox();
+            this.templatetextbox2 = new System.Windows.Forms.RichTextBox();
+            this.templatetextbox3 = new System.Windows.Forms.RichTextBox();
+            this.templatetextbox4 = new System.Windows.Forms.RichTextBox();
+            this.templatetextbox5 = new System.Windows.Forms.RichTextBox();
+            this.SaveData = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(805, 355);
+            this.button1.Location = new System.Drawing.Point(842, 390);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(97, 48);
+            this.button1.Size = new System.Drawing.Size(97, 75);
             this.button1.TabIndex = 0;
             this.button1.Text = "Upload PDF";
             this.button1.UseVisualStyleBackColor = true;
@@ -56,7 +62,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(171, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(252, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(573, 317);
             this.pictureBox1.TabIndex = 1;
@@ -69,7 +75,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(762, 108);
+            this.button2.Location = new System.Drawing.Point(842, 24);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 62);
             this.button2.TabIndex = 5;
@@ -79,7 +85,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(74, 108);
+            this.button3.Location = new System.Drawing.Point(162, 24);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 62);
             this.button3.TabIndex = 6;
@@ -89,7 +95,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(805, 300);
+            this.button4.Location = new System.Drawing.Point(842, 294);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(97, 35);
             this.button4.TabIndex = 7;
@@ -100,7 +106,7 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(28, 415);
+            this.comboBox1.Location = new System.Drawing.Point(15, 417);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 8;
@@ -109,7 +115,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 390);
+            this.label1.Location = new System.Drawing.Point(12, 390);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(105, 13);
             this.label1.TabIndex = 9;
@@ -117,7 +123,7 @@
             // 
             // Search
             // 
-            this.Search.Location = new System.Drawing.Point(28, 455);
+            this.Search.Location = new System.Drawing.Point(28, 456);
             this.Search.Name = "Search";
             this.Search.Size = new System.Drawing.Size(102, 26);
             this.Search.TabIndex = 10;
@@ -127,7 +133,7 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(171, 335);
+            this.richTextBox1.Location = new System.Drawing.Point(252, 346);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(573, 172);
             this.richTextBox1.TabIndex = 11;
@@ -136,31 +142,24 @@
             // Template
             // 
             this.Template.FormattingEnabled = true;
-            this.Template.Location = new System.Drawing.Point(28, 273);
+            this.Template.Location = new System.Drawing.Point(9, 148);
             this.Template.Name = "Template";
             this.Template.Size = new System.Drawing.Size(121, 21);
             this.Template.TabIndex = 12;
+            this.Template.TextChanged += new System.EventHandler(this.Template_TextChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 247);
+            this.label2.Location = new System.Drawing.Point(12, 122);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(88, 13);
             this.label2.TabIndex = 13;
             this.label2.Text = "Template Search";
             // 
-            // TemplateDetail
-            // 
-            this.TemplateDetail.FormattingEnabled = true;
-            this.TemplateDetail.Location = new System.Drawing.Point(28, 308);
-            this.TemplateDetail.Name = "TemplateDetail";
-            this.TemplateDetail.Size = new System.Drawing.Size(121, 21);
-            this.TemplateDetail.TabIndex = 14;
-            // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(28, 345);
+            this.button5.Location = new System.Drawing.Point(9, 306);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(121, 23);
             this.button5.TabIndex = 15;
@@ -168,13 +167,77 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.SearchTemplate);
             // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(10, 185);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(120, 109);
+            this.checkedListBox1.TabIndex = 16;
+            // 
+            // templatetextbox1
+            // 
+            this.templatetextbox1.Location = new System.Drawing.Point(137, 185);
+            this.templatetextbox1.Name = "templatetextbox1";
+            this.templatetextbox1.Size = new System.Drawing.Size(100, 17);
+            this.templatetextbox1.TabIndex = 17;
+            this.templatetextbox1.Text = "";
+            // 
+            // templatetextbox2
+            // 
+            this.templatetextbox2.Location = new System.Drawing.Point(136, 208);
+            this.templatetextbox2.Name = "templatetextbox2";
+            this.templatetextbox2.Size = new System.Drawing.Size(100, 17);
+            this.templatetextbox2.TabIndex = 18;
+            this.templatetextbox2.Text = "";
+            // 
+            // templatetextbox3
+            // 
+            this.templatetextbox3.Location = new System.Drawing.Point(137, 231);
+            this.templatetextbox3.Name = "templatetextbox3";
+            this.templatetextbox3.Size = new System.Drawing.Size(100, 17);
+            this.templatetextbox3.TabIndex = 19;
+            this.templatetextbox3.Text = "";
+            // 
+            // templatetextbox4
+            // 
+            this.templatetextbox4.Location = new System.Drawing.Point(137, 254);
+            this.templatetextbox4.Name = "templatetextbox4";
+            this.templatetextbox4.Size = new System.Drawing.Size(100, 17);
+            this.templatetextbox4.TabIndex = 20;
+            this.templatetextbox4.Text = "";
+            // 
+            // templatetextbox5
+            // 
+            this.templatetextbox5.Location = new System.Drawing.Point(136, 277);
+            this.templatetextbox5.Name = "templatetextbox5";
+            this.templatetextbox5.Size = new System.Drawing.Size(100, 17);
+            this.templatetextbox5.TabIndex = 21;
+            this.templatetextbox5.Text = "";
+            // 
+            // SaveData
+            // 
+            this.SaveData.Location = new System.Drawing.Point(137, 306);
+            this.SaveData.Name = "SaveData";
+            this.SaveData.Size = new System.Drawing.Size(99, 23);
+            this.SaveData.TabIndex = 22;
+            this.SaveData.Text = "Save Data";
+            this.SaveData.UseVisualStyleBackColor = true;
+            this.SaveData.Click += new System.EventHandler(this.SaveData_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(961, 530);
+            this.Controls.Add(this.SaveData);
+            this.Controls.Add(this.templatetextbox5);
+            this.Controls.Add(this.templatetextbox4);
+            this.Controls.Add(this.templatetextbox3);
+            this.Controls.Add(this.templatetextbox2);
+            this.Controls.Add(this.templatetextbox1);
+            this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.button5);
-            this.Controls.Add(this.TemplateDetail);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.Template);
             this.Controls.Add(this.richTextBox1);
@@ -186,7 +249,6 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button1);
-            this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hello World";
@@ -210,8 +272,14 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.ComboBox Template;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox TemplateDetail;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.RichTextBox templatetextbox1;
+        private System.Windows.Forms.RichTextBox templatetextbox2;
+        private System.Windows.Forms.RichTextBox templatetextbox3;
+        private System.Windows.Forms.RichTextBox templatetextbox4;
+        private System.Windows.Forms.RichTextBox templatetextbox5;
+        private System.Windows.Forms.Button SaveData;
     }
 }
 
