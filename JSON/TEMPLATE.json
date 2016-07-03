@@ -1,0 +1,33 @@
+{
+  "Receipt": [
+    "amount"
+  ],
+  "Invoice": [
+    "Date"
+  ],
+  "Bill": [
+    "payment"
+  ],
+  "news": [
+    "exp",
+    "date"
+  ],
+  "gfgf": [
+    "gfgf"
+  ],
+  "Money": [
+    "Bill"
+  ],
+  "TC": [
+    "amount"
+  ],
+  "Rent bill": [
+    "amount"
+  ],
+  "aadfad": [
+    "xdfs"
+  ],
+  "aadfadppadsd": [
+    "Bill"
+  ]
+}
