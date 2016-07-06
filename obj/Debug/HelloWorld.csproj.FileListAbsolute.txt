@@ -20,3 +20,4 @@ C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\bin\Debug\D
 C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\bin\Debug\Database1_log.ldf
 C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\obj\Debug\HelloWorld.TemplateCreator.resources
 C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\obj\Debug\HelloWorld.imagecrop.resources
+C:\Users\Vikas Thmz\Documents\Visual Studio 2015\Projects\HelloWorld\obj\Debug\HelloWorld.MainMenu.resources

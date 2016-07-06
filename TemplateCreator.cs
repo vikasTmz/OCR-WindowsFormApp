@@ -71,7 +71,7 @@ namespace HelloWorld
                 }
             }
             
-            WindowState = FormWindowState.Maximized;
+            //WindowState = FormWindowState.Maximized;
             richTextBox1.Hide();
             button1.Hide();
             label2.Hide();
@@ -377,7 +377,7 @@ namespace HelloWorld
                 templateDetail[item] = array1;
                 j++;
             }
-
+            Debug.WriteLine("numbers: " + txtbx.Length);
             File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\TEMPLATE.json", template.ToString());
             File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + ".json", templateDetail.ToString());
             File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json", "");
@@ -425,6 +425,13 @@ namespace HelloWorld
         {
             button2.Show();
             button3.Show();
+        }
+
+        private void mainMenuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MainMenu mainmenu = new MainMenu();
+            mainmenu.Show();
+            this.Close();
         }
 
         private void savetemplate_Click(object sender, EventArgs e)

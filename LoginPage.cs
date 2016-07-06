@@ -20,8 +20,8 @@ namespace HelloWorld
         {
             InitializeComponent();
         }
-        string password;
         JObject users;
+        public static string username;
         //static System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
 
         private void LoginPage_Load(object sender, EventArgs e)
@@ -54,9 +54,10 @@ namespace HelloWorld
             //dt.Rows.Count > 0//SqlDataReader dr;dr = command.ExecuteReader();
             if(users[textBox1.Text] != null && Register.Decrypt(users[textBox1.Text][0].ToString(), "OcrAppHash12345") == textBox2.Text)//(dr.Read())
             {
+                username = users[textBox1.Text][1].ToString();
+                MainMenu mainmenu = new MainMenu();
+                mainmenu.Show();
                 this.Hide();
-                TemplateCreator app = new TemplateCreator();
-                app.Show();
                 MessageBox.Show("Welcome " + users[textBox1.Text][1].ToString());
             }
 

@@ -50,7 +50,11 @@
             this.deletetemp = new System.Windows.Forms.Button();
             this.edittemp = new System.Windows.Forms.Button();
             this.savetempbutton = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.navigationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -229,7 +233,7 @@
             this.addnew.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addnew.Location = new System.Drawing.Point(3, 2);
             this.addnew.Name = "addnew";
-            this.addnew.Size = new System.Drawing.Size(74, 63);
+            this.addnew.Size = new System.Drawing.Size(74, 52);
             this.addnew.TabIndex = 10;
             this.addnew.Text = "New";
             this.addnew.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -243,9 +247,9 @@
             this.panel1.Controls.Add(this.edittemp);
             this.panel1.Controls.Add(this.savetempbutton);
             this.panel1.Controls.Add(this.addnew);
-            this.panel1.Location = new System.Drawing.Point(12, 9);
+            this.panel1.Location = new System.Drawing.Point(8, 25);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1299, 68);
+            this.panel1.Size = new System.Drawing.Size(1263, 60);
             this.panel1.TabIndex = 11;
             // 
             // deletetemp
@@ -255,7 +259,7 @@
             this.deletetemp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.deletetemp.Location = new System.Drawing.Point(243, 2);
             this.deletetemp.Name = "deletetemp";
-            this.deletetemp.Size = new System.Drawing.Size(74, 63);
+            this.deletetemp.Size = new System.Drawing.Size(74, 52);
             this.deletetemp.TabIndex = 13;
             this.deletetemp.Text = "Delete";
             this.deletetemp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -268,7 +272,7 @@
             this.edittemp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.edittemp.Location = new System.Drawing.Point(163, 2);
             this.edittemp.Name = "edittemp";
-            this.edittemp.Size = new System.Drawing.Size(74, 63);
+            this.edittemp.Size = new System.Drawing.Size(74, 52);
             this.edittemp.TabIndex = 12;
             this.edittemp.Text = "Edit";
             this.edittemp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -282,18 +286,43 @@
             this.savetempbutton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.savetempbutton.Location = new System.Drawing.Point(83, 2);
             this.savetempbutton.Name = "savetempbutton";
-            this.savetempbutton.Size = new System.Drawing.Size(74, 63);
+            this.savetempbutton.Size = new System.Drawing.Size(74, 52);
             this.savetempbutton.TabIndex = 11;
             this.savetempbutton.Text = "Save";
             this.savetempbutton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.savetempbutton.UseVisualStyleBackColor = true;
             this.savetempbutton.Click += new System.EventHandler(this.savetemplate_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.navigationToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1283, 24);
+            this.menuStrip1.TabIndex = 12;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // navigationToolStripMenuItem
+            // 
+            this.navigationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mainMenuToolStripMenuItem});
+            this.navigationToolStripMenuItem.Name = "navigationToolStripMenuItem";
+            this.navigationToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
+            this.navigationToolStripMenuItem.Text = "Navigation";
+            // 
+            // mainMenuToolStripMenuItem
+            // 
+            this.mainMenuToolStripMenuItem.Name = "mainMenuToolStripMenuItem";
+            this.mainMenuToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mainMenuToolStripMenuItem.Text = "Main Menu";
+            this.mainMenuToolStripMenuItem.Click += new System.EventHandler(this.mainMenuToolStripMenuItem_Click);
+            // 
             // TemplateCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1323, 557);
+            this.ClientSize = new System.Drawing.Size(1283, 557);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.OCR);
             this.Controls.Add(this.button5);
@@ -311,10 +340,14 @@
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "TemplateCreator";
             this.Text = "Template Creator";
             this.Load += new System.EventHandler(this.TemplateCreator_Load_1);
             this.panel1.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -343,5 +376,8 @@
         private System.Windows.Forms.Button deletetemp;
         private System.Windows.Forms.Button edittemp;
         private System.Windows.Forms.Button savetempbutton;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem navigationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mainMenuToolStripMenuItem;
     }
 }
