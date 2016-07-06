@@ -248,12 +248,23 @@ namespace HelloWorld
             int m = 0;
             RichTextBox[] txt = new RichTextBox[5];
             txt[0] = templatetextbox1; txt[1] = templatetextbox2; txt[2] = templatetextbox3; txt[3] = templatetextbox4; txt[4] = templatetextbox5;
+            string json;
+            TemplateCreator.templateDetail = new JObject();
+            if (new FileInfo("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + Template.Text + ".json").Length != 0)
+            {
+                using (StreamReader r = new StreamReader("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + Template.Text + ".json"))
+                {
+                    json = r.ReadToEnd();
+                }
+                TemplateCreator.templateDetail = JObject.Parse(json);
+            }
             foreach (object itemChecked in checkedListBox1.CheckedItems)
             {
                 DataRowView castedItem = itemChecked as DataRowView;
                 value2 = itemChecked.ToString();
                 if (value2 == null || value2 == "")
                     return;
+                
                 if (TemplateCreator.templateDetail[value2][1].ToString() == "" || TemplateCreator.templateDetail[value2][0].ToString() == "" || TemplateCreator.templateDetail[value2][2].ToString() == "" || TemplateCreator.templateDetail[value2][3].ToString() == "")
                     return;
                 Rectangle rect = new Rectangle(Int32.Parse(TemplateCreator.templateDetail[value2][0].ToString()), Int32.Parse(TemplateCreator.templateDetail[value2][1].ToString()), Int32.Parse(TemplateCreator.templateDetail[value2][2].ToString()), Int32.Parse(TemplateCreator.templateDetail[value2][3].ToString()));

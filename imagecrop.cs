@@ -22,10 +22,13 @@ namespace HelloWorld
         private void imagecrop_Load(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Maximized;
+            comboBox1.Items.Clear(); ;
             for (int i=0;i < TemplateCreator.txtbx.Length; i++)
             {
-                if(TemplateCreator.txtbx[i] != null)
+                if (TemplateCreator.txtbx[i] != null && TemplateCreator.txtbx[i].Text != "")
+                {
                     comboBox1.Items.Add(TemplateCreator.txtbx[i].Text.ToString());
+                }
             }
             panel1.Controls.Add(pictureBox1);
         }

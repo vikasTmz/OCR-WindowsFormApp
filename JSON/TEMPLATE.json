@@ -1,33 +1,18 @@
 {
-  "Receipt": [
-    "amount"
-  ],
   "Invoice": [
-    "Date"
+    "Invoice Dates"
   ],
-  "Bill": [
-    "payment"
+  "Receipt": [
+    "Date",
+    "Number",
+    "Amount"
   ],
-  "news": [
-    "exp",
-    "date"
+  "Purchase Bill": [
+    "Amount"
   ],
-  "gfgf": [
-    "gfgf"
-  ],
-  "Money": [
-    "Bill"
-  ],
-  "TC": [
-    "amount"
-  ],
-  "Rent bill": [
-    "amount"
-  ],
-  "aadfad": [
-    "xdfs"
-  ],
-  "aadfadppadsd": [
-    "Bill"
+  "Temp": [
+    "Date",
+    "Invoice Number",
+    "Amount"
   ]
 }
