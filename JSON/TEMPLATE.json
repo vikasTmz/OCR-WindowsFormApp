@@ -1,18 +1,5 @@
 {
   "Invoice": [
     "Invoice Dates"
-  ],
-  "Receipt": [
-    "Date",
-    "Number",
-    "Amount"
-  ],
-  "Purchase Bill": [
-    "Amount"
-  ],
-  "Temp": [
-    "Date",
-    "Invoice Number",
-    "Amount"
   ]
 }

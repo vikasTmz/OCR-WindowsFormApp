@@ -46,13 +46,9 @@ namespace HelloWorld
             Register reg = new Register();
             reg.Show();
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void loginuser()
         {
-            //string connstr = Utility.GetConnectionString();String query = "select name,email,pass from RegisterTable where email='"+textBox1.Text+"' and pass='"+password+"'";SqlConnection connection = new SqlConnection(connstr);connection.Open();SqlCommand command = new SqlCommand(query, connection);SqlDataAdapter da = new SqlDataAdapter(query,connection);DataTable dt = new DataTable();da.Fill(dt);
-
-            //dt.Rows.Count > 0//SqlDataReader dr;dr = command.ExecuteReader();
-            if(users[textBox1.Text] != null && Register.Decrypt(users[textBox1.Text][0].ToString(), "OcrAppHash12345") == textBox2.Text)//(dr.Read())
+            if (users[textBox1.Text] != null && Register.Decrypt(users[textBox1.Text][0].ToString(), "OcrAppHash12345") == textBox2.Text)//(dr.Read())
             {
                 username = users[textBox1.Text][1].ToString();
                 MainMenu mainmenu = new MainMenu();
@@ -65,6 +61,25 @@ namespace HelloWorld
             {
                 MessageBox.Show("Email Id or Password does not match/exist");
             }
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //string connstr = Utility.GetConnectionString();String query = "select name,email,pass from RegisterTable where email='"+textBox1.Text+"' and pass='"+password+"'";SqlConnection connection = new SqlConnection(connstr);connection.Open();SqlCommand command = new SqlCommand(query, connection);SqlDataAdapter da = new SqlDataAdapter(query,connection);DataTable dt = new DataTable();da.Fill(dt);
+
+            //dt.Rows.Count > 0//SqlDataReader dr;dr = command.ExecuteReader();
+            loginuser();
+        }
+
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                loginuser();
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                loginuser();
         }
     }
 }

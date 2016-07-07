@@ -45,7 +45,7 @@ namespace HelloWorld
             template = new JObject();
             templateDetail = new JObject();
             string json;
-
+            savetempbutton.Enabled = false;edittemp.Enabled = false;deletetemp.Enabled = false;
             using (StreamReader r = new StreamReader("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json"))
             {
                 json = r.ReadToEnd();
@@ -64,25 +64,20 @@ namespace HelloWorld
             {
                 if (listTemplate.Count > 0)
                 {
+                    temphistory.Hide();
                     historytemp[buttonindex] = new Button(); historytemp[buttonindex].Location = new Point(15, 140 + buttonindex * 40); historytemp[buttonindex].Size = new Size(219, 40);
                     historytemp[buttonindex].Text = item+" Template";historytemp[buttonindex].Click += new EventHandler(historytemplateclick);
                     this.Controls.Add(historytemp[buttonindex]);
                     buttonindex++;
                 }
+                else
+                    temphistory.Show();
             }
-            
-            //WindowState = FormWindowState.Maximized;
-            richTextBox1.Hide();
-            button1.Hide();
-            label2.Hide();
-            X.Hide();
-            Y.Hide();
-            Height.Hide();
-            Width.Hide();
-            button2.Hide();
-            label4.Hide();
-            button3.Hide();
 
+            this.Location = new Point(11,11);//WindowState = FormWindowState.Maximized;
+            richTextBox1.Hide();button1.Hide();X.Hide();Y.Hide();Height.Hide();Width.Hide();button2.Hide();button3.Hide();
+            panel5.SendToBack();panel6.SendToBack();panel2.SendToBack();panel3.SendToBack();panel4.SendToBack();
+            button5.Enabled = false;
         }
         public static void ExtractImagesFromPDF(string sourcePdf, string outputPath)
         {
@@ -221,21 +216,17 @@ namespace HelloWorld
                 ExtractImagesFromPDF(path, "C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\ExtractedImages");
                 Globals.index = 0;
             }
+            button5.Enabled = true;
         }
         public void historytemplateclick(object sender, EventArgs e)
         {
             Button clickedbutton = sender as Button;
             richTextBox1.Show();
             richTextBox1.Text = clickedbutton.Text.Substring(0, clickedbutton.Text.Length - 9);
-            Debug.WriteLine(richTextBox1.Text);
-            button1.Hide();
-            label2.Hide();
-            button2.Hide();
-            button3.Hide();
-            X.Show();
-            Y.Show();
-            Height.Show();
-            Width.Show();
+            button1.Hide();button2.Hide();button3.Hide();
+            X.Show();Y.Show();Height.Show();Width.Show();
+            savetempbutton.Enabled = false; edittemp.Enabled = true; deletetemp.Enabled = false;
+            richTextBox1.Enabled = false;
             string json;
             templateDetail = new JObject();
             if (new FileInfo("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + ".json").Length != 0)
@@ -246,12 +237,8 @@ namespace HelloWorld
                 }
                 templateDetail = JObject.Parse(json);
             }
-            while(index!=1)
-            {
-                removetempdetail();
-                index--;
-            }
-            index = 1;
+            refreshtextboxes();
+
             foreach (string item in template[richTextBox1.Text])
             {
                 addnewdetail();
@@ -261,18 +248,19 @@ namespace HelloWorld
                 width[index - 1].Text = templateDetail[item][2].ToString(); height[index - 1].Text = templateDetail[item][3].ToString();
                 index++;
             }
+            panel5.SendToBack(); panel6.SendToBack(); panel2.SendToBack(); panel3.SendToBack(); panel4.SendToBack();
         }
         private void button1_Click(object sender, EventArgs e)
         {
             if(richTextBox1.Text != "")
             {
-                label4.Hide();
                 X.Show();
                 Y.Show();
                 Height.Show();
                 Width.Show();
                 button2.Show();
                 button3.Show();
+                savetempbutton.Enabled = true;
                 txtbx[index - 1] = new RichTextBox(); txtbx[index - 1].Location = new Point(367, 200 + index * 40); txtbx[index - 1].Size = new Size(162, 26);
                 this.Controls.Add(txtbx[index - 1]);
 
@@ -291,9 +279,9 @@ namespace HelloWorld
             }
             else if(richTextBox1.Text == "")
             {
-                label4.Text = "Cannot be empty";
-                label4.Show();
+                MessageBox.Show("Fields cannot be empty");
             }
+            panel5.SendToBack(); panel6.SendToBack(); panel2.SendToBack(); panel3.SendToBack(); panel4.SendToBack();
         }
 
         private void addnewdetail()
@@ -314,26 +302,31 @@ namespace HelloWorld
 
             height[index - 1] = new RichTextBox(); height[index - 1].Location = new Point(832, 200 + index * 40); height[index - 1].Size = new Size(44, 26);
             this.Controls.Add(height[index - 1]);
+            panel5.SendToBack(); panel6.SendToBack(); panel2.SendToBack(); panel3.SendToBack(); panel4.SendToBack();
         }
         private void Adddetail(object sender, EventArgs e)
         {
             addnewdetail();
-            index++;
+            if (index <= txtbx.Length)
+                index++;
         }
         private void removetempdetail()
         {
             if (index == 1)
                 return;
+            txtbx[index - 2].Text = x[index - 2].Text = y[index - 2].Text = width[index - 2].Text = height[index - 2].Text = "";
             this.Controls.Remove(txtbx[index - 2]);
             this.Controls.Remove(x[index - 2]);
             this.Controls.Remove(y[index - 2]);
             this.Controls.Remove(width[index - 2]);
             this.Controls.Remove(height[index - 2]);
+            panel5.SendToBack(); panel6.SendToBack(); panel2.SendToBack(); panel3.SendToBack(); panel4.SendToBack();
         }
         private void Removedetail(object sender, EventArgs e)
         {
             removetempdetail();
-            index--;
+            if (index != 1)
+                index--;
         }
         private void button5_Click(object sender, EventArgs e)
         {
@@ -355,18 +348,23 @@ namespace HelloWorld
         {
             if (richTextBox1.Text == "")
             {
-                label4.Text = "Cannot be empty";
-                label4.Show();
+                MessageBox.Show("Fields cannot be empty");
                 return;
             }
-            if (!listTemplate.Contains(richTextBox1.Text))
-                listTemplate.Add(richTextBox1.Text);
+
             JArray array2 = new JArray();
-            for (int i = 0; i < txtbx.Length; i++)
+            for (int i = 0; i < index-1; i++)
             {
                 if (txtbx[i] != null && txtbx[i].Text != "")
                     array2.Add(txtbx[i].Text);
+                else
+                {
+                    MessageBox.Show("Fields cannot be empty");
+                    return;
+                }
             }
+            if (!listTemplate.Contains(richTextBox1.Text))
+                listTemplate.Add(richTextBox1.Text);
             template[richTextBox1.Text] = array2;
             int j = 0;
             templateDetail = new JObject();
@@ -377,7 +375,6 @@ namespace HelloWorld
                 templateDetail[item] = array1;
                 j++;
             }
-            Debug.WriteLine("numbers: " + txtbx.Length);
             File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\TEMPLATE.json", template.ToString());
             File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + ".json", templateDetail.ToString());
             File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json", "");
@@ -406,13 +403,8 @@ namespace HelloWorld
             }
             //Debug.WriteLine(template.Values.ToString());
         }
-
-        private void addnew_Click(object sender, EventArgs e)
+        private void refreshtextboxes()
         {
-            richTextBox1.Show();
-            button1.Show();
-            label2.Show();
-            richTextBox1.Text = "";
             while (index != 1)
             {
                 removetempdetail();
@@ -420,11 +412,21 @@ namespace HelloWorld
             }
             index = 1;
         }
+        private void addnew_Click(object sender, EventArgs e)
+        {
+            savetempbutton.Enabled = false;edittemp.Enabled = false;deletetemp.Enabled = false;
+            richTextBox1.Enabled = true;
+            richTextBox1.Show();
+            button1.Show();button2.Hide();button3.Hide();
+            richTextBox1.Text = "";
+            refreshtextboxes();
+            panel5.SendToBack(); panel6.SendToBack(); panel2.SendToBack(); panel3.SendToBack(); panel4.SendToBack();
+        }
 
         private void edittemp_Click(object sender, EventArgs e)
         {
-            button2.Show();
-            button3.Show();
+            button2.Show();button3.Show();
+            savetempbutton.Enabled = true; deletetemp.Enabled = true;
         }
 
         private void mainMenuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -432,6 +434,36 @@ namespace HelloWorld
             MainMenu mainmenu = new MainMenu();
             mainmenu.Show();
             this.Close();
+        }
+
+        private void deletetemp_Click(object sender, EventArgs e)
+        {
+            var confirmResult = MessageBox.Show("Are you sure to delete this item ?",
+                                     "Confirm Delete",
+                                     MessageBoxButtons.OKCancel);
+            if (confirmResult == DialogResult.Cancel)
+                return;
+            foreach (string item in template[richTextBox1.Text])
+                templateDetail.Remove(item);
+            template.Remove(richTextBox1.Text);
+            File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\TEMPLATE.json", template.ToString());
+            for(int i =listTemplate.Count-1;i>=0;i--)
+                if (listTemplate[i] == richTextBox1.Text)
+                {
+                    listTemplate.RemoveAt(i);
+                    this.Controls.Remove(historytemp[i]);
+                    break;
+                }
+            File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json", "");
+            for (int k = 0; k < listTemplate.Count; k++)
+            {
+                historytemp[k].Location = new Point(15, 140 + k * 40);
+                if (k < listTemplate.Count - 1)
+                    File.AppendAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json", listTemplate[k] + ",");
+                else
+                    File.AppendAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json", listTemplate[k]);
+            }
+            File.Delete("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + ".json");
         }
 
         private void savetemplate_Click(object sender, EventArgs e)
