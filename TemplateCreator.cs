@@ -243,13 +243,15 @@ namespace HelloWorld
             {
                 addnewdetail();
                 //Debug.WriteLine(item+" : "+ index.ToString() + " : " + templateDetail.ToString());
-                txtbx[index - 1].Text = item;
+                txtbx[index - 1].Text = item;txtbx[index - 1].Enabled = false;
                 x[index - 1].Text = templateDetail[item][0].ToString(); y[index - 1].Text = templateDetail[item][1].ToString();
                 width[index - 1].Text = templateDetail[item][2].ToString(); height[index - 1].Text = templateDetail[item][3].ToString();
+                x[index - 1].Enabled = false;y[index - 1].Enabled = false;width[index - 1].Enabled = false;height[index - 1].Enabled = false;
                 index++;
             }
             panel5.SendToBack(); panel6.SendToBack(); panel2.SendToBack(); panel3.SendToBack(); panel4.SendToBack();
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             if(richTextBox1.Text != "")
@@ -337,9 +339,9 @@ namespace HelloWorld
 
         private void OCR_Click(object sender, EventArgs e)
         {
-            if (!hasSaved)
+            /*if (!hasSaved)
                saveTEMP();
-            hasSaved = false;
+            hasSaved = false;*/
             this.Hide();
             Form1 ocr = new Form1();
             ocr.Show();
@@ -427,6 +429,13 @@ namespace HelloWorld
         {
             button2.Show();button3.Show();
             savetempbutton.Enabled = true; deletetemp.Enabled = true;
+            index = 1;
+            foreach (string item in template[richTextBox1.Text])
+            {
+                txtbx[index - 1].Enabled = true;
+                x[index - 1].Enabled =  y[index - 1].Enabled =  width[index - 1].Enabled =  height[index - 1].Enabled = true;
+                index++;
+            }
         }
 
         private void mainMenuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -464,6 +473,7 @@ namespace HelloWorld
                     File.AppendAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json", listTemplate[k]);
             }
             File.Delete("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + ".json");
+            refreshtextboxes();
         }
 
         private void savetemplate_Click(object sender, EventArgs e)
