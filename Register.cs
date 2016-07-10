@@ -25,7 +25,6 @@ namespace HelloWorld
         JObject users;
         private void Register_Load(object sender, EventArgs e)
         {
-            label5.Hide();
             textBox3.PasswordChar = '*';
             textBox4.PasswordChar = '*';
             string json;
@@ -127,12 +126,12 @@ namespace HelloWorld
         {
             if (textBox1.Text == "" || textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "")
             {
-                label5.Show(); label5.Text = "Fields cannot be empty!";
+                MessageBox.Show( "Fields cannot be empty!");
                 return;
             }
             if (!IsValidEmail(textBox2.Text))
             {
-                label5.Show(); label5.Text = "Invalid Email";
+                MessageBox.Show("Invalid Email");
                 return;
             }
 
@@ -140,7 +139,7 @@ namespace HelloWorld
             {
                 if(users.GetValue(textBox2.Text) != null)
                 {
-                    label5.Show(); label5.Text = "User already registered";
+                    MessageBox.Show("User already registered");
                     return;
                 }
                 string encryptedpass = Encrypt(textBox4.Text, "OcrAppHash12345");
@@ -148,13 +147,13 @@ namespace HelloWorld
                 pass.Add(encryptedpass);
                 pass.Add(textBox1.Text);
                 users[textBox2.Text] = pass;
-                File.AppendAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\USERS.json", users.ToString());
+                File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\USERS.json", "");
+                File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\USERS.json", users.ToString());
                 MessageBox.Show("Registered Successfully!");
             }
             else
             {
-                label5.Show();
-                label5.Text = "Password Mismatch";
+                MessageBox.Show("Password Mismatch");
             }
 
         }

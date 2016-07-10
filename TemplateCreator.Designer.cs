@@ -42,7 +42,6 @@
             this.Y = new System.Windows.Forms.Label();
             this.Width = new System.Windows.Forms.Label();
             this.Height = new System.Windows.Forms.Label();
-            this.OCR = new System.Windows.Forms.Button();
             this.addnew = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.deletetemp = new System.Windows.Forms.Button();
@@ -52,8 +51,8 @@
             this.navigationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
             this.temphistory = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -204,18 +203,6 @@
             this.Height.TabIndex = 2;
             this.Height.Text = "Height";
             // 
-            // OCR
-            // 
-            this.OCR.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OCR.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.OCR.Location = new System.Drawing.Point(1070, 415);
-            this.OCR.Name = "OCR";
-            this.OCR.Size = new System.Drawing.Size(135, 68);
-            this.OCR.TabIndex = 9;
-            this.OCR.Text = "Apply OCR";
-            this.OCR.UseVisualStyleBackColor = true;
-            this.OCR.Click += new System.EventHandler(this.OCR_Click);
-            // 
             // addnew
             // 
             this.addnew.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -321,16 +308,6 @@
             this.panel2.Size = new System.Drawing.Size(233, 560);
             this.panel2.TabIndex = 13;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(40, 5);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(127, 18);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Template History";
-            // 
             // temphistory
             // 
             this.temphistory.AutoSize = true;
@@ -340,6 +317,16 @@
             this.temphistory.Size = new System.Drawing.Size(116, 15);
             this.temphistory.TabIndex = 15;
             this.temphistory.Text = "no template created";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(40, 5);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(127, 18);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Template History";
             // 
             // panel3
             // 
@@ -410,9 +397,9 @@
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.OCR);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "TemplateCreator";
@@ -448,7 +435,6 @@
         private System.Windows.Forms.Label Y;
         private System.Windows.Forms.Label Width;
         private System.Windows.Forms.Label Height;
-        private System.Windows.Forms.Button OCR;
         private System.Windows.Forms.Button addnew;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button deletetemp;

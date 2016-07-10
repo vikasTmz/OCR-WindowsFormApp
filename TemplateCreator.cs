@@ -337,15 +337,7 @@ namespace HelloWorld
             croppper.Uploadimages(0);
         }
 
-        private void OCR_Click(object sender, EventArgs e)
-        {
-            /*if (!hasSaved)
-               saveTEMP();
-            hasSaved = false;*/
-            this.Hide();
-            Form1 ocr = new Form1();
-            ocr.Show();
-        }
+ 
         private void saveTEMP()
         {
             if (richTextBox1.Text == "")
@@ -473,7 +465,10 @@ namespace HelloWorld
                     File.AppendAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json", listTemplate[k]);
             }
             File.Delete("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + ".json");
+            if(File.Exists("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + "ocrOutput.json"))
+                File.Delete("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + "ocrOutput.json");
             refreshtextboxes();
+            richTextBox1.Text = "";
         }
 
         private void savetemplate_Click(object sender, EventArgs e)

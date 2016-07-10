@@ -1,5 +1,7 @@
 {
   "Invoice": [
-    "Invoice Dates"
+    "Dates",
+    "Name",
+    "Number"
   ]
 }

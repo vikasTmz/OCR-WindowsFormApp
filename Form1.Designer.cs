@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -211,6 +212,7 @@
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(13, 18);
             this.panel1.Name = "panel1";
@@ -246,8 +248,8 @@
             // templateCreatorToolStripMenuItem
             // 
             this.templateCreatorToolStripMenuItem.Name = "templateCreatorToolStripMenuItem";
-            this.templateCreatorToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.templateCreatorToolStripMenuItem.Text = "Template Creator";
+            this.templateCreatorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.templateCreatorToolStripMenuItem.Text = "Main Menu";
             this.templateCreatorToolStripMenuItem.Click += new System.EventHandler(this.templateCreatorToolStripMenuItem_Click);
             // 
             // panel2
@@ -264,7 +266,7 @@
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panel3.BackColor = System.Drawing.Color.Gainsboro;
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.richTextBox1);
             this.panel3.Controls.Add(this.panel1);
@@ -293,6 +295,7 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

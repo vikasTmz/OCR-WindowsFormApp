@@ -54,7 +54,7 @@ namespace HelloWorld
                 MainMenu mainmenu = new MainMenu();
                 mainmenu.Show();
                 this.Hide();
-                MessageBox.Show("Welcome " + users[textBox1.Text][1].ToString());
+                //MessageBox.Show("Welcome " + users[textBox1.Text][1].ToString());
             }
 
             else

@@ -19,7 +19,7 @@ namespace HelloWorld
 
         private void MainMenu_Load(object sender, EventArgs e)
         {
-            label1.Text = LoginPage.username;
+            label1.Text = "Welcome " + LoginPage.username;
         }
 
         private void createtemp_Click(object sender, EventArgs e)
@@ -27,6 +27,18 @@ namespace HelloWorld
             TemplateCreator app = new TemplateCreator();
             app.Show();
             this.Close();
+        }
+
+        private void applyocr_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form1 ocr = new Form1();
+            ocr.Show();
+        }
+
+        private void exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
