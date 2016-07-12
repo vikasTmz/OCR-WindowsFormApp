@@ -52,11 +52,13 @@
             this.templateCreatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // button2
@@ -248,7 +250,7 @@
             // templateCreatorToolStripMenuItem
             // 
             this.templateCreatorToolStripMenuItem.Name = "templateCreatorToolStripMenuItem";
-            this.templateCreatorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.templateCreatorToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.templateCreatorToolStripMenuItem.Text = "Main Menu";
             this.templateCreatorToolStripMenuItem.Click += new System.EventHandler(this.templateCreatorToolStripMenuItem_Click);
             // 
@@ -275,11 +277,21 @@
             this.panel3.Size = new System.Drawing.Size(775, 680);
             this.panel3.TabIndex = 26;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(15, 46);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(101, 100);
+            this.pictureBox2.TabIndex = 27;
+            this.pictureBox2.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1346, 733);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.SaveData);
@@ -308,6 +320,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -337,6 +350,7 @@
         private System.Windows.Forms.ToolStripMenuItem templateCreatorToolStripMenuItem;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 

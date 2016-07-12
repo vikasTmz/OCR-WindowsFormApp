@@ -29,16 +29,17 @@ namespace HelloWorld
             textBox4.PasswordChar = '*';
             string json;
             users = new JObject();
-            using (StreamReader r = new StreamReader("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\USERS.json"))
+            using (StreamReader r = new StreamReader("..\\..\\JSON\\USERS.json"))
             {
                 json = r.ReadToEnd();
             }
-            if (new FileInfo("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\USERS.json").Length != 0)
+            if (new FileInfo("..\\..\\JSON\\USERS.json").Length != 0)
                 users = JObject.Parse(json);
         }
         private const int Keysize = 256;
         private const int DerivationIterations = 1000;
 
+        //Encrypting password string
         public static string Encrypt(string plainText, string passPhrase)
         {
             var saltStringBytes = Generate256BitsOfRandomEntropy();
@@ -73,6 +74,7 @@ namespace HelloWorld
             }
         }
 
+        //Decrypting encrypted password string
         public static string Decrypt(string cipherText, string passPhrase)
         {
             var cipherTextBytesWithSaltAndIv = Convert.FromBase64String(cipherText);
@@ -116,6 +118,7 @@ namespace HelloWorld
             return randomBytes;
         }
         
+        //Check if email is valid
         bool IsValidEmail(string email)
         {
             try { var addr = new System.Net.Mail.MailAddress(email); return addr.Address == email; }
@@ -134,7 +137,7 @@ namespace HelloWorld
                 MessageBox.Show("Invalid Email");
                 return;
             }
-
+            //If passwords match, write username.email and encrypted password into database.
             if (textBox3.Text == textBox4.Text)
             {
                 if(users.GetValue(textBox2.Text) != null)
@@ -147,8 +150,8 @@ namespace HelloWorld
                 pass.Add(encryptedpass);
                 pass.Add(textBox1.Text);
                 users[textBox2.Text] = pass;
-                File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\USERS.json", "");
-                File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\USERS.json", users.ToString());
+                File.WriteAllText(@"..\\..\\JSON\\USERS.json", "");
+                File.WriteAllText(@"..\\..\\JSON\\USERS.json", users.ToString());
                 MessageBox.Show("Registered Successfully!");
             }
             else

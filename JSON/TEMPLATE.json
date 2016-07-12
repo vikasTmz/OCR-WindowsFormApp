@@ -3,5 +3,10 @@
     "Dates",
     "Name",
     "Number"
+  ],
+  "Bill": [
+    "Name",
+    "Amount",
+    "Date"
   ]
 }

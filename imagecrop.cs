@@ -21,6 +21,7 @@ namespace HelloWorld
 
         private void imagecrop_Load(object sender, EventArgs e)
         {
+            //On Load add the templates to the combo box
             WindowState = FormWindowState.Maximized;
             comboBox1.Items.Clear(); ;
             for (int i=0;i < TemplateCreator.txtbx.Length; i++)
@@ -81,6 +82,8 @@ namespace HelloWorld
                 TemplateCreator.Globals.index -= 1;
             Uploadimages(TemplateCreator.Globals.index);
         }
+        //GUI for cropping out the Image. On click draw a rectangle from using the initial mouse coordinates as top left X,Y 
+        //and then width and height as X(i)-X(f) & H(i)-H(f). (Where f=final and i= initial).
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             Cursor = Cursors.Default;
@@ -146,6 +149,7 @@ namespace HelloWorld
             gfx.FillRectangle(rectbrush, rect);
 
         }
+        //Reset the image i.e load the whole image again
         private void Reset_onclick(object sender, EventArgs e)
         {
             Debug.WriteLine(TemplateCreator.Globals.index);

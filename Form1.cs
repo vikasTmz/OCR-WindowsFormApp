@@ -29,7 +29,7 @@ namespace HelloWorld
             public static Int32 count = 0;
         }
         public int Length { get; }
-        string Loadingif = "C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\spinner.gif";
+        string Loadingif = "..\\..\\spinner.gif";
         public static JObject template, templateDetail;
         public static List<String> listTemplate = new List<String>();
         RichTextBox[] txt = new RichTextBox[5];
@@ -47,18 +47,18 @@ namespace HelloWorld
             template = new JObject();
             templateDetail = new JObject();
             string json;
-            using (StreamReader r = new StreamReader("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json"))
+            using (StreamReader r = new StreamReader("..\\..\\JSON\\LISTTEMPLATE.json"))
             {
                 json = r.ReadToEnd();
             }
 
-            if (new FileInfo("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json").Length != 0)
+            if (new FileInfo("..\\..\\JSON\\LISTTEMPLATE.json").Length != 0)
                 listTemplate = json.Split(',').ToList();
-            using (StreamReader r = new StreamReader("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\TEMPLATE.json"))
+            using (StreamReader r = new StreamReader("..\\..\\JSON\\TEMPLATE.json"))
             {
                 json = r.ReadToEnd();
             }
-            if (new FileInfo("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\TEMPLATE.json").Length != 0)
+            if (new FileInfo("..\\..\\JSON\\TEMPLATE.json").Length != 0)
                 template = JObject.Parse(json);
             for (int i = 0; i < listTemplate.Count; i++)
                 Template.Items.Add(listTemplate[i]);
@@ -87,7 +87,7 @@ namespace HelloWorld
             i = 0;
             tessnet2.Tesseract ocr = new tessnet2.Tesseract();
             ocr.SetVariable("tessedit_char_whitelist", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-            ocr.Init(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\tessdata_eng\", "eng", false); // To use correct tessdata
+            ocr.Init(@"..\\..\\tessdata_eng\", "eng", false); // To use correct tessdata
             richTextBox1.Text = "";
             List<tessnet2.Word> result1 = ocr.DoOCR(image1, Rectangle.Empty);
             foreach (tessnet2.Word word in result1)
@@ -130,9 +130,9 @@ namespace HelloWorld
             txt[0].Text = txt[1].Text = txt[2].Text = txt[3].Text = txt[4].Text = "";
             string json;
             templateDetail = new JObject();
-            if (new FileInfo("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + Template.Text + ".json").Length != 0)
+            if (new FileInfo("..\\..\\JSON\\" + Template.Text + ".json").Length != 0)
             {
-                using (StreamReader r = new StreamReader("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + Template.Text + ".json"))
+                using (StreamReader r = new StreamReader("..\\..\\JSON\\" + Template.Text + ".json"))
                 {
                     json = r.ReadToEnd();
                 }
@@ -157,7 +157,7 @@ namespace HelloWorld
                 gfx.DrawImage(bit, 0, 0, rect, GraphicsUnit.Pixel);
                 tessnet2.Tesseract ocr = new tessnet2.Tesseract();
                 ocr.SetVariable("tessedit_char_whitelist", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-                ocr.Init(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\tessdata_eng\", "eng", false); // To use correct tessdata
+                ocr.Init(@"..\\..\\tessdata_eng\", "eng", false); // To use correct tessdata
                 List<tessnet2.Word> result1 = ocr.DoOCR(crop, Rectangle.Empty);
                 txt[m].Text = "";
                 foreach (tessnet2.Word word in result1)
@@ -178,9 +178,10 @@ namespace HelloWorld
             {
                 array1.Add(itemChecked.ToString() + " : " +txt[p].Text);p++;
             }
+            array1.Add("OCR: " + richTextBox1.Text);
             JObject ocr = new JObject();
             ocr[Template.Text] = array1;
-            File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + Template.Text + "ocrOutput.json", ocr.ToString());
+            File.WriteAllText(@"..\\..\\JSON\\" + Template.Text + "ocrOutput.json", ocr.ToString());
             MessageBox.Show("Saved");
         }
 

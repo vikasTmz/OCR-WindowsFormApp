@@ -22,7 +22,7 @@ namespace HelloWorld
             public static string[] img_path = { "", "", "", "", "", "" }; // Modifiable in Code
             public static Int32 length = 0,index=0;
         }
-
+        //Initialising all the textboxes that are needed for Template detail.[ Detail name,x & y coordinates and width,height ]
         public static RichTextBox[] txtbx = new RichTextBox[10];
         public static RichTextBox[] x = new RichTextBox[10];
         public static RichTextBox[] y = new RichTextBox[10];
@@ -45,25 +45,27 @@ namespace HelloWorld
             template = new JObject();
             templateDetail = new JObject();
             string json;
+            //Loading all existing data from database(JSON file)
             savetempbutton.Enabled = false;edittemp.Enabled = false;deletetemp.Enabled = false;
-            using (StreamReader r = new StreamReader("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json"))
+            using (StreamReader r = new StreamReader("..\\..\\JSON\\LISTTEMPLATE.json"))
             {
                 json = r.ReadToEnd();
             }
 
-            if (new FileInfo("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json").Length != 0)
+            if (new FileInfo("..\\..\\JSON\\LISTTEMPLATE.json").Length != 0)
                 listTemplate = json.Split(',').ToList();
-            using (StreamReader r = new StreamReader("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\TEMPLATE.json"))
+            using (StreamReader r = new StreamReader("..\\..\\JSON\\TEMPLATE.json"))
             {
                 json = r.ReadToEnd();
             }
-            if (new FileInfo("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\TEMPLATE.json").Length != 0)
+            if (new FileInfo("..\\..\\JSON\\TEMPLATE.json").Length != 0)
                 template = JObject.Parse(json);
             
             foreach(string item in listTemplate)
             {
                 if (listTemplate.Count > 0)
                 {
+                    //Creating the Template Button list
                     temphistory.Hide();
                     historytemp[buttonindex] = new Button(); historytemp[buttonindex].Location = new Point(15, 140 + buttonindex * 40); historytemp[buttonindex].Size = new Size(219, 40);
                     historytemp[buttonindex].Text = item+" Template";historytemp[buttonindex].Click += new EventHandler(historytemplateclick);
@@ -79,6 +81,7 @@ namespace HelloWorld
             panel5.SendToBack();panel6.SendToBack();panel2.SendToBack();panel3.SendToBack();panel4.SendToBack();
             button5.Enabled = false;
         }
+        //ITextSharp . Extracting images from PDFs(PDF should contain one image per page).
         public static void ExtractImagesFromPDF(string sourcePdf, string outputPath)
         {
             Globals.index = 0;
@@ -156,7 +159,7 @@ namespace HelloWorld
             return null;
         }
 
-
+        //The images that are extracted are stored under the ExtractedImages directory.
 
         private static PdfObject FindImageInPDFDictionary(PdfDictionary pg)
         {
@@ -213,13 +216,14 @@ namespace HelloWorld
                 String path = dialog.FileName; // get name of file
                 string[] words = path.Split('\\');
                 filename.Text = words[words.Length-1];
-                ExtractImagesFromPDF(path, "C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\ExtractedImages");
+                ExtractImagesFromPDF(path, "..\\..\\ExtractedImages");
                 Globals.index = 0;
             }
             button5.Enabled = true;
         }
         public void historytemplateclick(object sender, EventArgs e)
         {
+            //On clicking an existing Template, display all the necessary detail
             Button clickedbutton = sender as Button;
             richTextBox1.Show();
             richTextBox1.Text = clickedbutton.Text.Substring(0, clickedbutton.Text.Length - 9);
@@ -229,14 +233,15 @@ namespace HelloWorld
             richTextBox1.Enabled = false;
             string json;
             templateDetail = new JObject();
-            if (new FileInfo("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + ".json").Length != 0)
+            if (new FileInfo("..\\..\\JSON\\" + richTextBox1.Text + ".json").Length != 0)
             {
-                using (StreamReader r = new StreamReader("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + ".json"))
+                using (StreamReader r = new StreamReader("..\\..\\JSON\\" + richTextBox1.Text + ".json"))
                 {
                     json = r.ReadToEnd();
                 }
                 templateDetail = JObject.Parse(json);
             }
+            //Remove existing textboxes frmo any previous action
             refreshtextboxes();
 
             foreach (string item in template[richTextBox1.Text])
@@ -254,6 +259,7 @@ namespace HelloWorld
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //On clicking "Add Template". Show necessary labels and add template detail buttons.
             if(richTextBox1.Text != "")
             {
                 X.Show();
@@ -285,7 +291,7 @@ namespace HelloWorld
             }
             panel5.SendToBack(); panel6.SendToBack(); panel2.SendToBack(); panel3.SendToBack(); panel4.SendToBack();
         }
-
+        //On clicking Plus button, adds new template detail boxes.
         private void addnewdetail()
         {
             if (index > txtbx.Length)
@@ -369,15 +375,15 @@ namespace HelloWorld
                 templateDetail[item] = array1;
                 j++;
             }
-            File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\TEMPLATE.json", template.ToString());
-            File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + ".json", templateDetail.ToString());
-            File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json", "");
+            File.WriteAllText(@"..\\..\\JSON\\TEMPLATE.json", template.ToString());
+            File.WriteAllText(@"..\\..\\JSON\\" + richTextBox1.Text + ".json", templateDetail.ToString());
+            File.WriteAllText(@"..\\..\\JSON\\LISTTEMPLATE.json", "");
             for (int k=0;k< listTemplate.Count;k++)
             {
                 if(k< listTemplate.Count-1)
-                    File.AppendAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json",  listTemplate[k] + ",");
+                    File.AppendAllText(@"..\\..\\JSON\\LISTTEMPLATE.json",  listTemplate[k] + ",");
                 else
-                    File.AppendAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json", listTemplate[k]);
+                    File.AppendAllText(@"..\\..\\JSON\\LISTTEMPLATE.json", listTemplate[k]);
             }
             bool existing = false;
             for (int k = 0; k < historytemp.Length; k++)
@@ -395,6 +401,7 @@ namespace HelloWorld
                 this.Controls.Add(historytemp[buttonindex]);
                 buttonindex++;
             }
+            //Save each Template in one file, each template detail in new files depending on their template names. This will be overwritten in each iteration.
             //Debug.WriteLine(template.Values.ToString());
         }
         private void refreshtextboxes()
@@ -439,6 +446,7 @@ namespace HelloWorld
 
         private void deletetemp_Click(object sender, EventArgs e)
         {
+            //Deletes the template name from list template, Template.json, the respective template detail file and the ocr output if one exists.
             var confirmResult = MessageBox.Show("Are you sure to delete this item ?",
                                      "Confirm Delete",
                                      MessageBoxButtons.OKCancel);
@@ -447,7 +455,7 @@ namespace HelloWorld
             foreach (string item in template[richTextBox1.Text])
                 templateDetail.Remove(item);
             template.Remove(richTextBox1.Text);
-            File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\TEMPLATE.json", template.ToString());
+            File.WriteAllText(@"..\\..\\JSON\\TEMPLATE.json", template.ToString());
             for(int i =listTemplate.Count-1;i>=0;i--)
                 if (listTemplate[i] == richTextBox1.Text)
                 {
@@ -455,18 +463,18 @@ namespace HelloWorld
                     this.Controls.Remove(historytemp[i]);
                     break;
                 }
-            File.WriteAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json", "");
+            File.WriteAllText(@"..\\..\\JSON\\LISTTEMPLATE.json", "");
             for (int k = 0; k < listTemplate.Count; k++)
             {
                 historytemp[k].Location = new Point(15, 140 + k * 40);
                 if (k < listTemplate.Count - 1)
-                    File.AppendAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json", listTemplate[k] + ",");
+                    File.AppendAllText(@"..\\..\\JSON\\LISTTEMPLATE.json", listTemplate[k] + ",");
                 else
-                    File.AppendAllText(@"C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\LISTTEMPLATE.json", listTemplate[k]);
+                    File.AppendAllText(@"..\\..\\JSON\\LISTTEMPLATE.json", listTemplate[k]);
             }
-            File.Delete("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + ".json");
-            if(File.Exists("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + "ocrOutput.json"))
-                File.Delete("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\" + richTextBox1.Text + "ocrOutput.json");
+            File.Delete("..\\..\\JSON\\" + richTextBox1.Text + ".json");
+            if(File.Exists("..\\..\\JSON\\" + richTextBox1.Text + "ocrOutput.json"))
+                File.Delete("..\\..\\JSON\\" + richTextBox1.Text + "ocrOutput.json");
             refreshtextboxes();
             richTextBox1.Text = "";
         }

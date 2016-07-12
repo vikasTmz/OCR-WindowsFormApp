@@ -21,21 +21,21 @@ namespace HelloWorld
         {
             label1.Text = "Welcome " + LoginPage.username;
         }
-
+        //Open Create Template Form
         private void createtemp_Click(object sender, EventArgs e)
         {
             TemplateCreator app = new TemplateCreator();
             app.Show();
             this.Close();
         }
-
+        //Open the OCR form
         private void applyocr_Click(object sender, EventArgs e)
         {
             this.Hide();
             Form1 ocr = new Form1();
             ocr.Show();
         }
-
+        //Close App
         private void exit_Click(object sender, EventArgs e)
         {
             Application.Exit();

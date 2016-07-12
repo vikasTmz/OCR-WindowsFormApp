@@ -29,11 +29,12 @@ namespace HelloWorld
             textBox2.PasswordChar = '*';
             string json;
             users = new JObject();
-            using (StreamReader r = new StreamReader("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\USERS.json"))
+            //Load existing users into JSON object on Form Load.
+            using (StreamReader r = new StreamReader("..\\..\\JSON\\USERS.json"))
             {
                 json = r.ReadToEnd();
             }
-            if (new FileInfo("C:\\Users\\Vikas Thmz\\Documents\\Visual Studio 2015\\Projects\\HelloWorld\\JSON\\USERS.json").Length != 0)
+            if (new FileInfo("..\\..\\JSON\\USERS.json").Length != 0)
                 users = JObject.Parse(json);
             /*myTimer.Tick += new EventHandler(TimerEventProcessor);
             myTimer.Interval = 100;
@@ -54,7 +55,7 @@ namespace HelloWorld
                 MainMenu mainmenu = new MainMenu();
                 mainmenu.Show();
                 this.Hide();
-                //MessageBox.Show("Welcome " + users[textBox1.Text][1].ToString());
+                //Decrypt password and check if the entered password matches with database.
             }
 
             else
